@@ -1,6 +1,9 @@
 from flask import Flask, make_response, redirect, abort
 app = Flask(__name__)
 
+def load_user(dev):
+	return '1'
+
 @app.route('/')
 def index():
 	response = make_response('This document carries a cookie')
