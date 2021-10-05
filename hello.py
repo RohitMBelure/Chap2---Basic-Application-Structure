@@ -1,38 +1,22 @@
-from flask import Flask
-from flask import session, g
-
-app = Flask(__name__)
-app.secret_key = 'Rohit@1997'
-
-@app.before_first_request
-def before_request_func():
-	print('This function will run once')
-
-@app.before_request
-def before_request_func():
-	session['foo']='bar'
-	g.username = 'root'
-	print('before_request is running')
-
-@app.route('/')
-def index():
-	username = g.username
-	foo = session.get('foo')
-	print('index is running', username, foo)
-	return 'Hello World'
-
-@app.after_request
-def after_request_func(response):
-	username = g.username
-	foo = session.get('foo')
-	print('after_request is running',username, foo)
-	return response
-
-@app.teardown_request
-def teardown_request_func(error=None):
-	print('teardown_request is running')
-	if error:
-		print(str(error))
-
-if __name__ == '__main__':
-	app.run(debug=True)
+from flask import Flask, make_response, redirect, abort
+ 2 app = Flask(__name__)
+ 3
+ 4 @app.route('/')
+ 5 8LfpDE4pD63aXdef index():
+ 6 8LfpDE4pD63aX   response = make_response('This document carries a cookie')
+ 7 8LfpDE4pD63aX   response.set_cookie('answer', '42')
+ 8         return response
+ 9
+10 @app.route('/hello')
+11 def hello():
+12         return redirect('http://www.example.com')
+13
+14 @app.route('/user/<id>')
+15 def get_user(id):
+16         user = load_user(id)
+17         if not user:
+18                 abort(404)
+19         return 'hello, %s' %user.name
+20
+21 if __name__ == '__main__':
+22         app.run(debug=True)
