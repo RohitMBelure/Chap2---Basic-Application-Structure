@@ -2,7 +2,7 @@ from flask import Flask, make_response, redirect, abort
 app = Flask(__name__)
 
 @app.route('/')
-	def index():
+def index():
 	response = make_response('This document carries a cookie')
 	response.set_cookie('answer', '42')
 	return response
